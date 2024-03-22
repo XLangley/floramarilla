@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flor y Lluvia de Flores</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: black;
+            position: relative;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .flower {
+            width: 200px;
+            height: 200px;
+            background-image: url('https://static.vecteezy.com/system/resources/previews/014/033/616/original/yellow-flower-transparent-free-png.png'); /* Nueva URL de la imagen */
+            background-size: cover;
+            cursor: pointer;
+            animation: spin 10s linear infinite; 
+        }
+
+        .text {
+            position: absolute;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            top: 220px;
+            font-size: 36px;
+            text-align: center;
+            color: rgb(250, 233, 0);
+            
+        }
+        .text2 {
+            position: absolute;
+            top: 800px; 
+            font-size: 18px;
+            text-align: center;
+            color: rgb(250, 233, 0);
+        }
+
+        .petal {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-image: url('https://static.vecteezy.com/system/resources/previews/014/033/616/original/yellow-flower-transparent-free-png.png'); /* Nueva URL de la imagen */
+            background-size: cover;
+            /* background-color: transparent;*/
+            border-radius: 50%;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 1;
+                transform: translateY(-200px) rotateZ(0deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(calc(100vh - 40px)) rotateZ(360deg); 
+            }
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotateZ(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="flower" id="flower"></div>
+    </div>
+    <div class="text">❤️Feliz dia de las flores amarillas amor mio❤️</div>
+    <div class="text2">Para la mejor polola del mundo mundial - Almendra Martinez (la nanone)</div>
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const container = document.getElementById("container");
+
+            container.addEventListener("mousedown", function(event) {
+                console.log("Evento de clic en el contenedor");
+
+                if (event.target.id === "flower") {
+                    console.log("Hizo clic en la flor");
+                    generateFlowerRain(event.clientX, event.clientY);
+                } else {
+                    console.log("No hizo clic en la flor");
+                }
+            });
+
+            window.addEventListener("beforeunload", function() {
+                removeFlowers();
+            });
+        });
+
+        function generateFlowerRain(x, y) {
+            console.log("Generando lluvia de flores en las coordenadas:", x, y);
+
+            const colors = ["red", "blue", "purple", "pink", "orange"];
+            const windowWidth = window.innerWidth;
+
+            for (let i = 0; i < 30; i++) {
+                const petal = document.createElement("div");
+                petal.classList.add("petal");
+                
+
+                const offsetX = Math.random() * windowWidth;
+                const offsetY = -Math.random() * 300; 
+
+                petal.style.left = offsetX + "px";
+                petal.style.top = offsetY + "px";
+
+                document.body.appendChild(petal);
+            }
+        }
+
+        function removeFlowers() {
+            const flowers = document.querySelectorAll(".petal");
+            flowers.forEach(function(flower) {
+                flower.remove();
+            });
+        }
+    </script>
+</body>
+</html>
